@@ -1,11 +1,11 @@
 import './App.css'
 import { MantineProvider, Text, Button } from '@mantine/core'
+import Todo from './components/Todo/index'
 
 export default function App() {
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
-      <Text>Welcome to Mantine!</Text>
-      <Button>Click me I do nothing</Button>
+      <Todo />
     </MantineProvider>
   )
 }
