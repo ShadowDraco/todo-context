@@ -1,21 +1,32 @@
-import './App.css'
-import { useContext } from 'react'
-import useStyles from './hooks/styles'
-import SettingsProvider, { SettingsContext } from './Context/Settings'
+import './App.css';
 
-import Todo from './components/Todo/index'
-import { Center } from '@mantine/core'
+import Todo from './components/Todo/index';
+import { Center } from '@mantine/core';
+import Footer from './components/Footer';
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import NavHeader from './components/Header';
+import Settings from './components/Settings';
 
 export default function App() {
-  const { title, username } = useContext(SettingsContext)
-
-  const { classes } = useStyles()
   return (
     <>
-      <h1 className={classes.h1}>{title}</h1>
-      <Center>
-        <Todo />
-      </Center>
+      <BrowserRouter>
+        <NavHeader />
+        <Center>
+          <Routes>
+            <Route
+              path='/'
+              element={<Todo />}
+            />
+            <Route
+              path='/settings'
+              element={<Settings />}
+            />
+          </Routes>
+        </Center>
+        <Footer />
+      </BrowserRouter>
     </>
-  )
+  );
 }

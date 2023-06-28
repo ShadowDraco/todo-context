@@ -1,8 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
+import SettingsProvider from './Context/Settings';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('renders h1 Header', () => {
+  render(
+    <SettingsProvider>
+      <App />
+    </SettingsProvider>
+  );
+  const headerElement = screen.getByText(/Home/i);
+  expect(headerElement).toBeInTheDocument();
 });

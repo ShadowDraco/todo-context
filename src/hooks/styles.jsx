@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/core'
+import { createStyles } from '@mantine/core';
 
 // maybe useful if the stykles are used by more than one component?
 const useStyles = createStyles(theme => ({
@@ -10,22 +10,46 @@ const useStyles = createStyles(theme => ({
     marginLeft: 0,
     marginTop: 0,
     color: 'white',
+    paddingLeft: '0.5em',
+    display: 'flex',
+    fontSize: '2em',
+    gap: '20px',
+  },
+  settingsH1: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.5em',
+  },
+  link: {
+    color: 'white',
+    textDecoration: 'none',
   },
   todo: {
-    marginLeft: theme.spacing.xl,
-    width: '80%',
+    width: '90%',
   },
   todoHeader: {
     width: '100%',
     color: 'white',
-    background: 'black',
+    background: 'rgba(40, 40, 40)',
     padding: 1,
-    paddingLeft: 10,
     textAlign: 'left',
+    paddingLeft: 10,
+  },
+  flex: {
+    display: 'flex',
+    gap: '0.3em',
+    alignItems: 'center',
   },
   todoForm: {
     display: 'flex',
     flexDirection: 'column',
+    width: '45%',
+  },
+  settingsForm: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '60%',
+    gap: '0.5em',
   },
   todoFormArea: {
     display: 'flex',
@@ -44,6 +68,11 @@ const useStyles = createStyles(theme => ({
     boxShadow: '2px 2px 2px gray',
     background: 'white',
   },
-}))
+  footer: {
+    textAlign: 'right',
+    width: '80%',
+    margin: 'auto',
+  },
+}));
 
-export default useStyles
+export default useStyles;
