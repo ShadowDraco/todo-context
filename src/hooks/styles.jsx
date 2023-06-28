@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/core'
+import { createStyles } from '@mantine/core';
 
 // maybe useful if the stykles are used by more than one component?
 const useStyles = createStyles(theme => ({
@@ -44,6 +44,11 @@ const useStyles = createStyles(theme => ({
     boxShadow: '2px 2px 2px gray',
     background: 'white',
   },
-}))
+  footer: {
+    textAlign: 'right',
+    width: '80%',
+    margin: 'auto',
+  },
+}));
 
-export default useStyles
+export default useStyles;
