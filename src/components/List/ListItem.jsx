@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Grid, Text, Button, CloseButton } from '@mantine/core';
+import { Grid, Text, CloseButton, Badge } from '@mantine/core';
 
 import useStyles from '../../hooks/styles';
 export default function ListItem({ item, toggleComplete, deleteItem }) {
@@ -15,14 +15,12 @@ export default function ListItem({ item, toggleComplete, deleteItem }) {
       className={classes.todoItem}
     >
       <Grid.Col span={'auto'}>
-        <Button
-          color='green'
-          radius='xl'
-          compact
+        <Badge
+          color={item.complete ? 'red' : 'green'}
           onClick={() => toggleComplete(item.id)}
         >
-          Pending
-        </Button>
+          {item.complete ? 'Complete' : 'Pending'}
+        </Badge>
       </Grid.Col>
 
       <Grid.Col span={'auto'}>

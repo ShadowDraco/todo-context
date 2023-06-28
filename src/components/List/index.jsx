@@ -32,7 +32,7 @@ export default function List({ toggleComplete, deleteItem }) {
     <>
       <div data-testid='TODO-LIST'>
         {currentList.map((item, index) => {
-          return item.complete && hideCompleted ? (
+          return item.complete && !hideCompleted ? (
             ''
           ) : (
             <ListItem
