@@ -11,7 +11,6 @@ import {
   NumberInput,
   Card,
   Text,
-  Header,
 } from '@mantine/core';
 import { IconSettings } from '@tabler/icons-react';
 

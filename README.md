@@ -4,7 +4,7 @@ Use the context API and various hooks to create a Todo App
 
 ## Author: Ethan Storm
 
-## Collaboration: Code Fellows LAB-31
+## Collaboration: Code Fellows LAB-31, 32
 
 ### Resources and Links
 
