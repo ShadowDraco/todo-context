@@ -1,18 +1,28 @@
-import { createStyles } from '@mantine/core';
+import { createStyles } from '@mantine/core'
 
 // maybe useful if the stykles are used by more than one component?
 const useStyles = createStyles(theme => ({
+  HEADER: {
+    backgroundColor: theme.colors.blue[4],
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  loginForm: {
+    display: 'flex',
+    gap: 10,
+    justifyContent: 'right',
+    alignItems: 'center',
+  },
   h1: {
     backgroundColor: theme.colors.blue[4],
     padding: theme.spacing.md,
-    width: '100%',
     margin: theme.spacing.md,
     marginLeft: 0,
     marginTop: 0,
     color: 'white',
     paddingLeft: '0.5em',
     display: 'flex',
-    fontSize: '2em',
+    fontSize: '1.5em',
     gap: '20px',
   },
   settingsH1: {
@@ -73,6 +83,6 @@ const useStyles = createStyles(theme => ({
     width: '80%',
     margin: 'auto',
   },
-}));
+}))
 
-export default useStyles;
+export default useStyles

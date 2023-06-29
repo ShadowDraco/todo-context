@@ -1,26 +1,29 @@
-import useStyles from '../../hooks/styles';
-import { Link } from 'react-router-dom';
-import { Header } from '@mantine/core';
-import React from 'react';
+import useStyles from '../../hooks/styles'
+import { Button, Container, Header } from '@mantine/core'
+import React, { useContext } from 'react'
+import { AuthContext } from '../../Context/Auth'
+import Login from '../Auth/Login'
 
 export default function NavHeader() {
-  const { classes } = useStyles();
-
+  const { classes } = useStyles()
+  const { isLoggedIn, logout } = useContext(AuthContext)
   return (
-    <Header className={classes.h1}>
-      <Link
-        className={classes.link}
-        to='/'
-        default
-      >
-        Home
-      </Link>
-      <Link
-        className={classes.link}
-        to='/settings'
-      >
-        Settings
-      </Link>
-    </Header>
-  );
+    <Container className={classes.HEADER}>
+      <Header className={classes.h1}>
+        <a className={classes.link} href='/' default>
+          Home
+        </a>
+        <a className={classes.link} href='/settings'>
+          Settings
+        </a>
+      </Header>
+      {!isLoggedIn ? (
+        <Login />
+      ) : (
+        <Button onClick={logout} color='red' mt='2%'>
+          Log out
+        </Button>
+      )}
+    </Container>
+  )
 }

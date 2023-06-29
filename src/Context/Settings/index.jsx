@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
-export const SettingsContext = React.createContext();
+export const SettingsContext = React.createContext()
 
 export default function SettingsProvider({ children }) {
-  const [title, setTitle] = useState('Home');
+  const [title, setTitle] = useState('Home')
   const [defaultValues] = useState({
     difficulty: 4,
-  });
+  })
   //TODO Put all of this into default values and rewrite state
-  const [sortWord, setSortWord] = useState('difficulty');
-  const [activePage, setPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(3);
-  const [hideCompleted, setHideCompleted] = useState(true);
-  const [list, setList] = useState([]);
-  const [currentList, setCurrentList] = useState([]);
-  const [incomplete, setIncomplete] = useState([]);
+  const [sortWord, setSortWord] = useState('difficulty')
+  const [activePage, setPage] = useState(1)
+  const [itemsPerPage, setItemsPerPage] = useState(3)
+  const [hideCompleted, setHideCompleted] = useState(true)
+  const [list, setList] = useState([])
+  const [currentList, setCurrentList] = useState([])
+  const [incomplete, setIncomplete] = useState([])
 
   const settings = {
     title,
@@ -33,11 +33,11 @@ export default function SettingsProvider({ children }) {
     incomplete,
     setIncomplete,
     defaultValues,
-  };
+  }
 
   return (
     <SettingsContext.Provider value={settings}>
       {children}
     </SettingsContext.Provider>
-  );
+  )
 }

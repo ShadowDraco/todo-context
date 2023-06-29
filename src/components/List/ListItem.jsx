@@ -1,10 +1,11 @@
-import React from 'react';
+import React from 'react'
 
-import { Grid, Text, CloseButton, Badge } from '@mantine/core';
+import { Grid, Text, CloseButton, Badge } from '@mantine/core'
 
-import useStyles from '../../hooks/styles';
+import useStyles from '../../hooks/styles'
+import Auth from '../Auth'
 export default function ListItem({ item, toggleComplete, deleteItem }) {
-  const { classes } = useStyles();
+  const { classes } = useStyles()
 
   return (
     <Grid
@@ -27,29 +28,24 @@ export default function ListItem({ item, toggleComplete, deleteItem }) {
         <Text>{item.assignee}</Text>
       </Grid.Col>
 
-      <Grid.Col
-        span={'auto'}
-        offset={6}
-        style={{ textAlign: 'right' }}
-      >
-        <CloseButton
-          title='Delete todo'
-          size='xl'
-          iconSize={20}
-          onClick={() => {
-            deleteItem(item.id);
-          }}
-        />
+      <Grid.Col span={'auto'} offset={6} style={{ textAlign: 'right' }}>
+        <Auth capability={'delete'}>
+          <CloseButton
+            title='Delete todo'
+            size='xl'
+            iconSize={20}
+            onClick={() => {
+              deleteItem(item.id)
+            }}
+          />
+        </Auth>
       </Grid.Col>
 
       <Grid.Col span={10}>
         <Text>{item.text}</Text>
       </Grid.Col>
 
-      <Grid.Col
-        offset={8}
-        span={3}
-      >
+      <Grid.Col offset={8} span={3}>
         <Text>
           <small>Difficulty: {item.difficulty}</small>
         </Text>
@@ -57,5 +53,5 @@ export default function ListItem({ item, toggleComplete, deleteItem }) {
 
       <hr />
     </Grid>
-  );
+  )
 }
