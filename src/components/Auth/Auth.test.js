@@ -1,18 +1,23 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 
-import Settings from '.'
+import Auth from '.'
 
-import SettingsProvider from '../../Context/Settings'
-import AuthProvider from '../../Context/Auth'
-import Login from '../Auth/Login'
+import AuthProvider, { AuthContext } from '../../Context/Auth'
+import Login from './Login'
 
-test('renders settings page', () => {
+test('renders Auth Component', () => {
   render(
     <AuthProvider>
-      <SettingsProvider>
-        <Login />
-        <Settings />
-      </SettingsProvider>
+      <AuthContext.Consumer>
+        {({ isLoggedIn, login, logout }) => {
+          return (
+            <>
+              <Login />
+              <Auth capability={'read'} />
+            </>
+          )
+        }}
+      </AuthContext.Consumer>
     </AuthProvider>
   )
 
@@ -24,6 +29,6 @@ test('renders settings page', () => {
   fireEvent.change(passwordInput, { target: { value: 'ADMIN' } })
   fireEvent.click(loginButton)
 
-  const settingsElement = screen.getByTestId('SETTINGS')
-  expect(settingsElement).toBeInTheDocument()
+  const authElement = screen.getByTestId('AUTH')
+  expect(authElement).toBeInTheDocument()
 })
