@@ -11,6 +11,7 @@ Use the context API and various hooks to create a Todo App
 - [lab 31 sandbox](https://codesandbox.io/p/github/ShadowDraco/todo-context/main?workspaceId=a3383399-bf2b-4cb1-9efa-c698b2303ac8)
 - ![Lab 32 UML](./assets/Lab32.png)
 - ![Lab 33 UML](./assets/Lab33.png)
+- ![Lab 34 UML](./assets/Lab34.png)
 
 ## Learning Outcomes
 
@@ -47,3 +48,23 @@ In Phase 3, we require users be logged in to view items and also restrict access
   - As a user, I want to ensure that only fellow users that are allowed to “create”, based - on their user type, can add new To Do Items.
   - As a user, I want to ensure that only fellow users that are allowed to “update”, based - on their user type, can mark To Do Items complete.
   - As a user, I want to ensure that only fellow users that are allowed to “delete”, based on their user type, can delete new To Do Items.
+
+## To Do List Manager Phase 4: Integrating with a live API.
+
+In this final phase, we’ll be requiring that users be logged in through a live authentication server, in order to see the to do items. Additionally, based on their user type, they will be allowed (or denied) to perform actions such as editing or deleting them. All To Do items will be stored in a database, accessed through a deployed API.
+
+### API
+
+URL: REACT_APP_API_URL
+
+- `GET /todo`: Gets a list of all items.
+- 'POST /todo': Adds an item.
+- 'PUT /todo': Updates an item (you'll use this to mark them as complete).
+- 'DELETE /todo/:id' : Deletes an item.
+
+### Authentication
+
+Registration (/signup).
+Login (/signin).
+Authorization (via Bearer Token).
+ACL (using user roles)

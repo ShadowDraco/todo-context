@@ -1,65 +1,102 @@
-import React, { useContext, useEffect } from 'react'
-import useForm from '../../hooks/form'
+import React, { useContext, useEffect, useState } from 'react';
+import useForm from '../../hooks/form';
 
-import { v4 as uuid } from 'uuid'
-import useStyles from '../../hooks/styles'
-import { SettingsContext } from '../../Context/Settings'
-import { Container, Input, Stack, Button, TextInput } from '@mantine/core'
-import List from '../List'
-import Auth from '../Auth'
+import { v4 as uuid } from 'uuid';
+import useStyles from '../../hooks/styles';
+import { SettingsContext } from '../../Context/Settings';
+import { Container, Input, Stack, Button, TextInput } from '@mantine/core';
+import List from '../List';
+import Auth from '../Auth';
+import axios from 'axios';
 
-const Todo = () => {
-  const { classes } = useStyles()
+const Todo = ({ url }) => {
+  const { classes } = useStyles();
   const { defaultValues, list, setList, incomplete, setIncomplete } =
-    useContext(SettingsContext)
+    useContext(SettingsContext);
+  const [apiUrl, setApiUrl] = useState(
+    url ? url : `${process.env.REACT_APP_API_URL}`
+  );
 
-  const { handleChange, handleSubmit } = useForm(addItem, defaultValues)
+  const { handleChange, handleSubmit } = useForm(addItem, defaultValues);
 
-  function addItem(item) {
-    item.id = uuid()
-    item.complete = false
+  async function addItem(item) {
+    item.complete = false;
 
-    setList([...list, item])
+    const response = await axios.post(`${apiUrl}/api/v1/todo`, item);
+
+    console.log(response);
+
+    setList([...list, response.data]);
   }
 
-  function deleteItem(id) {
-    const items = list.filter(item => item.id !== id)
+  async function deleteItem(id) {
+    const response = await axios.delete(`${apiUrl}/api/v1/todo/${id}`);
 
-    setList(items)
+    const items = list.filter(item => item._id !== id);
+
+    setList(items);
   }
+
+  const updateWithDataBase = async item => {
+    const response = await axios.put(
+      `$${apiUrl}/api/v1/todo/${item._id}`,
+      item
+    );
+  };
 
   function toggleComplete(id) {
     const items = list.map(item => {
-      if (item.id === id) {
-        item.complete = !item.complete
+      if (item._id === id) {
+        // change the item
+        item.complete = !item.complete;
+        // send the changed item's complete to the server
+        updateWithDataBase(item);
       }
 
-      return item
-    })
+      return item;
+    });
 
-    setList(items)
+    setList(items);
   }
 
   useEffect(() => {
-    let incompleteCount = list.filter(item => !item.complete).length
-    setIncomplete(incompleteCount)
-    document.title = `To Do List: ${incomplete}`
+    let incompleteCount = list.filter(item => !item.complete).length;
+    setIncomplete(incompleteCount);
+    document.title = `To Do List: ${incomplete}`;
     // linter will want 'incomplete' added to dependency array unnecessarily.
     // disable code used to avoid linter warning
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [list])
+  }, [list]);
+
+  useEffect(() => {
+    const getTodos = async () => {
+      const response = await axios.get(`${apiUrl}/api/v1/todo`);
+
+      setList(response.data.results);
+    };
+
+    getTodos();
+    // unnessecary dependency
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Container className={classes.todo}>
       <Container>
-        <header data-testid='todo-header' className={classes.todoHeader}>
+        <header
+          data-testid='todo-header'
+          className={classes.todoHeader}
+        >
           <h1 data-testid='todo-h1'>To Do List: {incomplete} items pending</h1>
         </header>
 
         <Container className={classes.todoFormArea}>
           {/* leave the form code inside of the Todo Component */}
           <Auth capability={'create'}>
-            <form onSubmit={handleSubmit} className={classes.todoForm}>
+            <form
+              onSubmit={handleSubmit}
+              className={classes.todoForm}
+            >
               <h2>Add To Do Item</h2>
 
               <label>
@@ -105,14 +142,17 @@ const Todo = () => {
           <Container className={classes.todoItems}>
             <Stack className={classes.todoItems}>
               <Auth capability={'read'}>
-                <List toggleComplete={toggleComplete} deleteItem={deleteItem} />
+                <List
+                  toggleComplete={toggleComplete}
+                  deleteItem={deleteItem}
+                />
               </Auth>
             </Stack>
           </Container>
         </Container>
       </Container>
     </Container>
-  )
-}
+  );
+};
 
-export default Todo
+export default Todo;

@@ -1,4 +1,4 @@
-import { createStyles } from '@mantine/core'
+import { createStyles } from '@mantine/core';
 
 // maybe useful if the stykles are used by more than one component?
 const useStyles = createStyles(theme => ({
@@ -53,7 +53,7 @@ const useStyles = createStyles(theme => ({
   todoForm: {
     display: 'flex',
     flexDirection: 'column',
-    width: '45%',
+    width: '100%',
   },
   settingsForm: {
     display: 'flex',
@@ -83,6 +83,6 @@ const useStyles = createStyles(theme => ({
     width: '80%',
     margin: 'auto',
   },
-}))
+}));
 
-export default useStyles
+export default useStyles;
