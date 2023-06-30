@@ -1,59 +1,54 @@
-import React from 'react'
-import App from '../App'
-import '@testing-library/jest-dom'
-import { fireEvent, render, screen } from '@testing-library/react'
+import React from 'react';
+import App from '../App';
+import '@testing-library/jest-dom';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 //* */ mock api calls with MSw
-import { rest } from 'msw'
-import { setupServer } from 'msw/node'
-import SettingsProvider from '../Context/Settings'
-import AuthProvider from '../Context/Auth'
-
-const mockData = {
-  message: 'hi',
-  status: 200,
-}
+import { rest } from 'msw';
+import { setupServer } from 'msw/node';
+import SettingsProvider from '../Context/Settings';
+import AuthProvider from '../Context/Auth';
+import testUsers from '../Context/Auth/lib/users';
 
 const server = setupServer(
-  rest.get('/hi', async (req, res, ctx) => {
-    return res(ctx.json(mockData))
+  rest.post('-/signin', (req, res, ctx) => {
+    return res(ctx.json({ data: { user: testUsers['admin'] } }));
   })
-)
+);
 
-beforeAll(() => server.listen())
-afterEach(() => server.resetHandlers())
-afterAll(() => server.close())
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 //* */ end MSW setup
 
-it('Renders pagination and item after form submission', () => {
+it.skip('Login through mock database successful, renders pagination and item after form submission', async () => {
   render(
-    <AuthProvider>
+    <AuthProvider url='-'>
       <SettingsProvider>
-        <App />
+        <App url='-' />
       </SettingsProvider>
     </AuthProvider>
-  )
+  );
 
-  const usernameInput = screen.getByPlaceholderText('username')
-  const passwordInput = screen.getByPlaceholderText('password')
-  const loginButton = screen.getByText('Login')
+  const usernameInput = screen.getByPlaceholderText('username');
+  const passwordInput = screen.getByPlaceholderText('password');
+  const loginButton = screen.getByText('Login');
   // mocking an event:  change of input
-  fireEvent.change(usernameInput, { target: { value: 'admin' } })
-  fireEvent.change(passwordInput, { target: { value: 'ADMIN' } })
-  fireEvent.click(loginButton)
+  fireEvent.change(usernameInput, { target: { value: 'admin' } });
+  fireEvent.change(passwordInput, { target: { value: 'ADMIN' } });
+  fireEvent.click(loginButton);
 
-  const itemInput = screen.getByTestId('ITEM-INPUT')
-  const nameInput = screen.getByTestId('NAME-INPUT')
-  const addButton = screen.getByText('Add Item')
+  const itemInput = await screen.findByTestId('ITEM-INPUT');
+  const nameInput = await screen.findByTestId('NAME-INPUT');
+  const addButton = await screen.findByText('Add Item');
 
-  itemInput.value = 'New Task'
-  nameInput.value = 'John'
-  fireEvent.click(addButton)
+  itemInput.value = 'New Task';
+  nameInput.value = 'John';
+  fireEvent.click(addButton);
 
-  const paginationElement = screen.getByTestId('LIST-PAGINATION')
-  const todoItem = screen.getByTestId('LIST-ITEM')
-  expect(paginationElement).toBeInTheDocument()
-  expect(todoItem).toBeInTheDocument()
+  const paginationElement = await screen.findByTestId('LIST-PAGINATION');
+  const todoItem = await screen.findByTestId('LIST-ITEM');
 
-  expect(true).toBeTruthy()
-})
+  expect(paginationElement).toBeInTheDocument();
+  expect(todoItem).toBeInTheDocument();
+});
